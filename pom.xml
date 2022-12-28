@@ -13,7 +13,7 @@
   <artifactId>RecipeApp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>RecipeApp</name>
-  <description>RecipeApp</description>
+  <description>RecipesApp, prints out a list recipes, used Maven and Spring Framework, used Java</description>
   <properties>
     <java.version>11</java.version>
   </properties>

@@ -1,0 +1,1 @@
+RecipesApp,prints out a list recipes, used Maven and Spring Framework,used Java
