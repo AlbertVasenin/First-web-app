@@ -1,7 +1,9 @@
 package pro.sky.recipeapp.model;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import pro.sky.recipeapp.services.IngredientsService;
 
 @Data
 @AllArgsConstructor

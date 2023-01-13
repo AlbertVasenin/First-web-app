@@ -10,7 +10,7 @@ public class Recipe {
 
   private String name;
   private int time;
-  private List<Ingredients> ingredients;
+  private List<String> ingredients;
   private List<String> instruction;
 
 }

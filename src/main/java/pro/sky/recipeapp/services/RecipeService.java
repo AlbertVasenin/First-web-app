@@ -7,5 +7,5 @@ public interface RecipeService {
 
   String getRecipe(int id);
 
-  void addRecipe(String name, int time, List<Ingredients> ingredients, List<String> instruction);
+  String addRecipe(String name, int time, List<String> ingredients, List<String> instruction);
 }

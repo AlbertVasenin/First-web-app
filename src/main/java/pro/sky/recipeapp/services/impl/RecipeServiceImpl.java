@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import org.springframework.stereotype.Service;
-import pro.sky.recipeapp.model.Ingredients;
 import pro.sky.recipeapp.model.Recipe;
 import pro.sky.recipeapp.services.RecipeService;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
-
-  public static Integer id = 0;
+  public static Integer id = 1;
   private final Map<Integer, Recipe> listRecipes = new TreeMap<>();
 
   @Override
@@ -24,10 +22,10 @@ public class RecipeServiceImpl implements RecipeService {
   }
 
   @Override
-  public void addRecipe(String name, int time, List<Ingredients> ingredients,
+  public String addRecipe(String name, int time, List<String> ingredients,
       List<String> instruction) {
-    if (listRecipes.isEmpty()) {
-      listRecipes.put(id++, new Recipe(name, time, ingredients, instruction));
-    }
+      Recipe recipe = new Recipe(name, time, ingredients, instruction);
+      listRecipes.put(id++, recipe);
+    return listRecipes.toString();
   }
 }
