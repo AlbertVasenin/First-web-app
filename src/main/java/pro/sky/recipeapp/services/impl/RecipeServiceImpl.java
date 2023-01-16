@@ -1,6 +1,5 @@
 package pro.sky.recipeapp.services.impl;
 
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import org.springframework.stereotype.Service;
@@ -20,12 +19,8 @@ public class RecipeServiceImpl implements RecipeService {
       return listRecipes.get(id).getName();
     }
   }
-
   @Override
-  public String addRecipe(String name, int time, List<String> ingredients,
-      List<String> instruction) {
-      Recipe recipe = new Recipe(name, time, ingredients, instruction);
-      listRecipes.put(id++, recipe);
-    return listRecipes.toString();
+  public void saveRecipe(Recipe recipe) {
+    listRecipes.put(id++, recipe);
   }
 }

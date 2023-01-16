@@ -1,7 +1,10 @@
 package pro.sky.recipeapp.services;
 
+import pro.sky.recipeapp.model.Ingredients;
+
 public interface IngredientsService {
   String getIngredients(int id);
 
-  void addIngredients(String title,int count, String measure);
+  void saveIngredients(Ingredients ingredients);
+
 }

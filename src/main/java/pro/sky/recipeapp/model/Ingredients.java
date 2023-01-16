@@ -1,15 +1,46 @@
 package pro.sky.recipeapp.model;
 
-import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import pro.sky.recipeapp.services.IngredientsService;
+import org.springframework.stereotype.Component;
+
 
 @Data
-@AllArgsConstructor
 public class Ingredients {
 
-  private String name;
-  private int count;
+  private String title;
+  private Integer count;
   private String measure;
+
+  public Ingredients(String title, int count, String measure) {
+    setTitle(title);
+    setCount(count);
+    setMeasure(measure);
+  }
+
+  public String setTitle(String title) {
+    if (title != null && !title.isEmpty()) {
+      this.title = title;
+    } else {
+      throw new IllegalArgumentException("Name not valid");
+    }
+    return title;
+  }
+
+  public Integer setCount(Integer count) {
+    if (count != null && count >= 0) {
+      this.count = count;
+    } else {
+      throw new IllegalArgumentException("Count not be < 0");
+    }
+    return count;
+  }
+
+  public String setMeasure(String measure) {
+    if (measure != null && !measure.isEmpty()) {
+      this.measure = measure;
+    } else {
+      throw new IllegalArgumentException("Input measure!");
+    }
+    return measure;
+  }
 }
