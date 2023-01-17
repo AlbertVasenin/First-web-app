@@ -1,6 +1,7 @@
 package pro.sky.recipeapp.services.impl;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import org.springframework.stereotype.Service;
 import pro.sky.recipeapp.model.Recipe;
@@ -8,19 +9,53 @@ import pro.sky.recipeapp.services.RecipeService;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
-  public static Integer id = 1;
-  private final Map<Integer, Recipe> listRecipes = new TreeMap<>();
+
+  public static long id = 1;
+  private final Map<Long, Recipe> listRecipes = new TreeMap<>();
 
   @Override
-  public String getRecipe(int id) {
-    if (id < 0) {
-      throw new RuntimeException("ID не может быть меньше нуля!");
-    } else {
-      return listRecipes.get(id).getName();
+  public Recipe getRecipe(long id) {
+    for (Entry<Long, Recipe> entry : listRecipes.entrySet()) {
+      if (entry != null && entry.getKey() == id) {
+        Recipe recipe = listRecipes.get(id);
+        if (recipe != null) {
+          return recipe;
+        }
+      }
     }
+    return null;
   }
+
   @Override
-  public void saveRecipe(Recipe recipe) {
-    listRecipes.put(id++, recipe);
+  public long addRecipe(Recipe recipe) {
+    listRecipes.getOrDefault(id, null);
+    listRecipes.put(id, recipe);
+    return id++;
+  }
+
+  @Override
+  public Recipe editRecipe(long id, Recipe recipe) {
+    if (listRecipes.containsKey(id)) {
+      listRecipes.put(id, recipe);
+      return recipe;
+    }
+    return null;
+  }
+
+  @Override
+  public boolean deleteRecipe(long id) {
+    if (listRecipes.containsKey(id)) {
+      listRecipes.remove(id);
+      return true;
+    }
+    return false;
+  }
+
+  @Override
+  public Map<Long, Recipe> getAllRecipes() {
+    for (long i = 0; i < listRecipes.size(); ) {
+      listRecipes.get(++i);
+    }
+    return listRecipes;
   }
 }
