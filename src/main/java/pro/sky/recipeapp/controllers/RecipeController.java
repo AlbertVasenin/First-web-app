@@ -1,5 +1,7 @@
 package pro.sky.recipeapp.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +18,7 @@ import pro.sky.recipeapp.services.RecipeService;
 
 @RestController
 @RequestMapping("/recipe")
+@Tag(name = "Рецепты", description = "CRUD - операции с рецептами")
 public class RecipeController {
 
   private final RecipeService recipeService;
@@ -24,12 +27,18 @@ public class RecipeController {
     this.recipeService = recipeService;
   }
 
+  @Operation(
+      summary = "Создание рецепта",
+      description = "Заполните поля в формате JSON")
   @PostMapping()
   public ResponseEntity<Long> addRecipe(@RequestBody Recipe recipe) {
     long id = recipeService.addRecipe(recipe);
     return ResponseEntity.ok(id);
   }
 
+  @Operation(
+      summary = "Получение рецепта",
+      description = "Получение по ID(целочисленное число) рецепта")
   @GetMapping("/{id}")
   public ResponseEntity<Recipe> getRecipe(@PathVariable long id) {
     Recipe recipe = recipeService.getRecipe(id);
@@ -40,6 +49,9 @@ public class RecipeController {
     }
   }
 
+  @Operation(
+      summary = "Редактирование рецепта",
+      description = "Редактирование по ID(целочисленное число) рецепта")
   @PutMapping("/{id}")
   public ResponseEntity<Recipe> editRecipe(@PathVariable long id,
       @RequestBody Recipe recipe) {
@@ -51,6 +63,9 @@ public class RecipeController {
     }
   }
 
+  @Operation(
+      summary = "Удаление рецепта",
+      description = "Удаление по ID(целочисленное число) рецепта")
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteRecipe(@PathVariable long id) {
     if (recipeService.deleteRecipe(id)) {
@@ -59,7 +74,9 @@ public class RecipeController {
       return ResponseEntity.notFound().build();
     }
   }
-
+  @Operation(
+      summary = "Получение всего списка рецептов",
+      description = "Входные данные не нужны")
   @GetMapping()
   public ResponseEntity<Map<Long, Recipe>> getAllRecipes() {
     Map<Long, Recipe> recipeList = recipeService.getAllRecipes();

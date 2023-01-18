@@ -13,14 +13,29 @@
   <artifactId>RecipeApp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>RecipeApp</name>
-  <description>RecipesApp, prints out a list recipes, used Maven and Spring Framework, used Java</description>
+  <description>RecipesApp, prints out a list recipes, used Maven and Spring Framework, used Java
+  </description>
   <properties>
     <java.version>11</java.version>
   </properties>
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.12.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>1.6.14</version>
     </dependency>
 
     <dependency>
@@ -42,6 +57,7 @@
   </dependencies>
 
   <build>
+    <pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -56,6 +72,7 @@
         </configuration>
       </plugin>
     </plugins>
+    </pluginManagement>
   </build>
 
 </project>

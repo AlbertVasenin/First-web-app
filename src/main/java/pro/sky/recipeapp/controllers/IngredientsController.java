@@ -1,5 +1,12 @@
 package pro.sky.recipeapp.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +22,7 @@ import pro.sky.recipeapp.services.IngredientsService;
 
 @RestController
 @RequestMapping("/ingredients")
+@Tag(name = "Ингредиенты", description = "CRUD - операции с ингредиентами")
 public class IngredientsController {
 
   private IngredientsService ingredientsService;
@@ -23,12 +31,18 @@ public class IngredientsController {
     this.ingredientsService = ingredientsService;
   }
 
+  @Operation(
+      summary = "Создание ингредиента",
+      description = "Заполните поля в формате JSON")
   @PostMapping()
   public ResponseEntity<Long> addIngredients(@RequestBody Ingredients ingredients) {
     long id = ingredientsService.addIngredients(ingredients);
     return ResponseEntity.ok(id);
   }
 
+  @Operation(
+      summary = "Получение ингредиента",
+      description = "Получение по ID(целочисленное число) ингредиента")
   @GetMapping("/{id}")
   public ResponseEntity<Ingredients> getIngredients(@PathVariable long id) {
     Ingredients ingredients = ingredientsService.getIngredients(id);
@@ -39,6 +53,9 @@ public class IngredientsController {
     }
   }
 
+  @Operation(
+      summary = "Редактирование ингредиента",
+      description = "Редактирование по ID(целочисленное число) ингредиента")
   @PutMapping("/{id}")
   public ResponseEntity<Ingredients> editIngredients(@PathVariable long id,
       @RequestBody Ingredients ingredients) {
@@ -50,6 +67,9 @@ public class IngredientsController {
     }
   }
 
+  @Operation(
+      summary = "Удаление ингредиента",
+      description = "Удаление по ID(целочисленное число) ингредиента")
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteIngredient(@PathVariable long id) {
     if (ingredientsService.deleteIngredient(id)) {
@@ -59,6 +79,9 @@ public class IngredientsController {
     }
   }
 
+  @Operation(
+      summary = "Получение всего списка ингредиентов",
+      description = "Входные данные не нужны")
   @GetMapping()
   public ResponseEntity<Map<Long, Ingredients>> getAllIngredients() {
     Map<Long, Ingredients> ingredientsList = ingredientsService.getAllIngredients();
