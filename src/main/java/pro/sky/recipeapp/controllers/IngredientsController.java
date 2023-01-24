@@ -1,13 +1,9 @@
 package pro.sky.recipeapp.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +31,7 @@ public class IngredientsController {
       summary = "Создание ингредиента",
       description = "Заполните поля в формате JSON")
   @PostMapping()
-  public ResponseEntity<Long> addIngredients(@RequestBody Ingredients ingredients) {
+  public ResponseEntity<Long> addIngredients(@Valid @RequestBody Ingredients ingredients) {
     long id = ingredientsService.addIngredients(ingredients);
     return ResponseEntity.ok(id);
   }
@@ -57,7 +53,7 @@ public class IngredientsController {
       summary = "Редактирование ингредиента",
       description = "Редактирование по ID(целочисленное число) ингредиента")
   @PutMapping("/{id}")
-  public ResponseEntity<Ingredients> editIngredients(@PathVariable long id,
+  public ResponseEntity<Ingredients> editIngredients(@Valid @PathVariable long id,
       @RequestBody Ingredients ingredients) {
     Ingredients ingredient = ingredientsService.editIngredients(id, ingredients);
     if (ingredient != null) {

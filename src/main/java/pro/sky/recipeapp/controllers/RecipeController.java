@@ -3,6 +3,7 @@ package pro.sky.recipeapp.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class RecipeController {
       summary = "Создание рецепта",
       description = "Заполните поля в формате JSON")
   @PostMapping()
-  public ResponseEntity<Long> addRecipe(@RequestBody Recipe recipe) {
+  public ResponseEntity<Long> addRecipe(@Valid @RequestBody Recipe recipe) {
     long id = recipeService.addRecipe(recipe);
     return ResponseEntity.ok(id);
   }
