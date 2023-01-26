@@ -1,5 +1,6 @@
 package pro.sky.recipeapp.services.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,9 +37,10 @@ public class FilesServiceImpl implements FilesService {
     }
   }
 
-  private boolean cleanFile(String dataFileName) {
+  @Override
+  public boolean cleanFile(String dataFileName) {
     try {
-      Path path = Path.of(dataFilePath,dataFileName);
+      Path path = Path.of(dataFilePath, dataFileName);
       Files.deleteIfExists(path);
       Files.createFile(path);
       return true;
@@ -46,5 +48,11 @@ public class FilesServiceImpl implements FilesService {
       e.printStackTrace();
       return false;
     }
+  }
+
+  @Override
+  public File getDataFile(String dataNameFile) {
+    return new File(dataFilePath + "/" + dataNameFile + ".json");
+
   }
 }

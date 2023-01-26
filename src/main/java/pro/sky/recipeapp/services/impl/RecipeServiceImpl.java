@@ -91,8 +91,9 @@ public class RecipeServiceImpl implements RecipeService {
       throw new RuntimeException(e);
     }
   }
+
   @PostConstruct
-  private void init(){
+  private void init() {
     readFromFile();
   }
 }
