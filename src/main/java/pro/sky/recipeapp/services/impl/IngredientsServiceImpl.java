@@ -4,11 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import pro.sky.recipeapp.exeptions.ExceptionsApp;
 import pro.sky.recipeapp.model.Ingredients;
 import pro.sky.recipeapp.services.FilesService;
 import pro.sky.recipeapp.services.IngredientsService;
@@ -18,7 +18,7 @@ public class IngredientsServiceImpl implements IngredientsService {
 
   @Value("${name.of.ingredients.data.file}")
   private String dataFileName;
-  private FilesService filesService;
+  private final FilesService filesService;
 
   public static long id = 1;
   private Map<Long, Ingredients> listIngredients = new TreeMap<>();
@@ -28,44 +28,45 @@ public class IngredientsServiceImpl implements IngredientsService {
   }
 
   @Override
-  public Ingredients getIngredients(long id) {
-    for (Entry<Long, Ingredients> entry : listIngredients.entrySet()) {
-      if (entry != null && entry.getKey() == id) {
-        Ingredients ingredients = listIngredients.get(id);
-        if (ingredients != null) {
-          return ingredients;
-        }
-      }
+  public Ingredients getIngredients(long id) throws ExceptionsApp {
+    if (listIngredients.containsKey(id)) {
+      return listIngredients.get(id);
+    } else {
+      throw new ExceptionsApp("Ингредиента с таким id не существует");
     }
-    return null;
   }
 
   @Override
-  public Ingredients editIngredients(long id, Ingredients ingredients) {
+  public Ingredients editIngredients(long id, Ingredients ingredients) throws ExceptionsApp {
     if (listIngredients.containsKey(id)) {
       listIngredients.put(id, ingredients);
       saveToFile();
       return ingredients;
+    } else {
+      throw new ExceptionsApp("Ингредиент не найден");
     }
-    return null;
   }
 
   @Override
-  public long addIngredients(Ingredients ingredients) {
-    listIngredients.getOrDefault(id, null);
-    listIngredients.put(id, ingredients);
-    saveToFile();
-    return id++;
+  public long addIngredients(Ingredients ingredients) throws ExceptionsApp {
+    if (!listIngredients.containsValue(ingredients)) {
+      listIngredients.put(id, ingredients);
+      saveToFile();
+      return id++;
+    } else {
+      throw new ExceptionsApp("Такой ингредиент есть в списке");
+    }
   }
 
 
   @Override
-  public boolean deleteIngredient(long id) {
+  public boolean deleteIngredient(long id) throws ExceptionsApp {
     if (listIngredients.containsKey(id)) {
       listIngredients.remove(id);
       return true;
+    } else {
+      throw new ExceptionsApp("Ингредиент не найден");
     }
-    return false;
   }
 
   public Map<Long, Ingredients> getAllIngredients() {
@@ -80,7 +81,7 @@ public class IngredientsServiceImpl implements IngredientsService {
       String json = new ObjectMapper().writeValueAsString(listIngredients);
       filesService.saveToFile(json, dataFileName);
     } catch (JsonProcessingException e) {
-      throw new RuntimeException(e);
+      throw new RuntimeException("Ошибка сохранения файла");
     }
 
   }
@@ -92,11 +93,12 @@ public class IngredientsServiceImpl implements IngredientsService {
           new TypeReference<TreeMap<Long, Ingredients>>() {
           });
     } catch (JsonProcessingException e) {
-      throw new RuntimeException(e);
+      throw new RuntimeException("Ошибка чтения файла");
     }
   }
+
   @PostConstruct
-  private void init(){
+  private void init() {
     readFromFile();
   }
 }

@@ -49,8 +49,10 @@ public class FilesController {
       return ResponseEntity.noContent().build();
     }
   }
-  @Operation(summary = "Загрузить файлы", description = "Чтобы заменить файл ингредиентов или рецептов, скопируйте "
-      + "необходимое название файла из кавычек: \"ingredients\" или \"recipes\" и вставьте в параметр dataNameFile, затем выберите соответсвующий файл")
+
+  @Operation(summary = "Загрузить файлы", description =
+      "Чтобы заменить файл ингредиентов или рецептов, скопируйте "
+          + "необходимое название файла из кавычек: \"ingredients\" или \"recipes\" и вставьте в параметр dataNameFile, затем выберите соответсвующий файл")
   @PostMapping(value = "/import/{dataNameFile}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<Void> upLoadFiles(@PathVariable String dataNameFile,
       @RequestParam MultipartFile file) {

@@ -55,4 +55,13 @@ public class FilesServiceImpl implements FilesService {
     return new File(dataFilePath + "/" + dataNameFile + ".json");
 
   }
+
+  @Override
+  public Path createTempFile(String suffix) {
+    try {
+      return Files.createTempFile(Path.of(dataFilePath), "temp", suffix);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }

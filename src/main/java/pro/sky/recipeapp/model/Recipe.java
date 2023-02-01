@@ -21,4 +21,11 @@ public class Recipe {
   private List<Ingredients> ingredientsList;
   private List<String> instruction;
 
+  @Override
+  public String toString() {
+    return name + " " +
+        " " + time +
+        " " + ingredientsList +
+        " " + instruction;
+  }
 }

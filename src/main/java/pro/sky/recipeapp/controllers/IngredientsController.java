@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pro.sky.recipeapp.exeptions.ExceptionsApp;
 import pro.sky.recipeapp.model.Ingredients;
 import pro.sky.recipeapp.services.IngredientsService;
 
@@ -21,7 +22,7 @@ import pro.sky.recipeapp.services.IngredientsService;
 @Tag(name = "Ингредиенты", description = "CRUD - операции с ингредиентами")
 public class IngredientsController {
 
-  private IngredientsService ingredientsService;
+  private final IngredientsService ingredientsService;
 
   public IngredientsController(IngredientsService ingredientsService) {
     this.ingredientsService = ingredientsService;
@@ -31,7 +32,8 @@ public class IngredientsController {
       summary = "Создание ингредиента",
       description = "Заполните поля в формате JSON")
   @PostMapping()
-  public ResponseEntity<Long> addIngredients(@Valid @RequestBody Ingredients ingredients) {
+  public ResponseEntity<Long> addIngredients(@Valid @RequestBody Ingredients ingredients)
+      throws ExceptionsApp {
     long id = ingredientsService.addIngredients(ingredients);
     return ResponseEntity.ok(id);
   }
@@ -40,7 +42,7 @@ public class IngredientsController {
       summary = "Получение ингредиента",
       description = "Получение по ID(целочисленное число) ингредиента")
   @GetMapping("/{id}")
-  public ResponseEntity<Ingredients> getIngredients(@PathVariable long id) {
+  public ResponseEntity<Ingredients> getIngredients(@PathVariable long id) throws ExceptionsApp {
     Ingredients ingredients = ingredientsService.getIngredients(id);
     if (ingredients != null) {
       return ResponseEntity.ok(ingredients);
@@ -54,7 +56,7 @@ public class IngredientsController {
       description = "Редактирование по ID(целочисленное число) ингредиента")
   @PutMapping("/{id}")
   public ResponseEntity<Ingredients> editIngredients(@Valid @PathVariable long id,
-      @RequestBody Ingredients ingredients) {
+      @RequestBody Ingredients ingredients) throws ExceptionsApp {
     Ingredients ingredient = ingredientsService.editIngredients(id, ingredients);
     if (ingredient != null) {
       return ResponseEntity.ok(ingredient);
@@ -67,7 +69,7 @@ public class IngredientsController {
       summary = "Удаление ингредиента",
       description = "Удаление по ID(целочисленное число) ингредиента")
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteIngredient(@PathVariable long id) {
+  public ResponseEntity<Void> deleteIngredient(@PathVariable long id) throws ExceptionsApp {
     if (ingredientsService.deleteIngredient(id)) {
       return ResponseEntity.ok().build();
     } else {

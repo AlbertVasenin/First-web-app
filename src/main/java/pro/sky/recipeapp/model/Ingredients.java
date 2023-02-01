@@ -4,7 +4,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -19,4 +18,8 @@ public class Ingredients {
   @NotBlank
   private String measure;
 
+  @Override
+  public String toString() {
+    return title + " " + " " + count + " " + measure;
+  }
 }
