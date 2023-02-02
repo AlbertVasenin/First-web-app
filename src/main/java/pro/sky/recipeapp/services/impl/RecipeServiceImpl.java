@@ -69,6 +69,7 @@ public class RecipeServiceImpl implements RecipeService {
   public boolean deleteRecipe(long id) throws ExceptionsApp {
     if (listRecipes.containsKey(id)) {
       listRecipes.remove(id);
+      saveToFile();
       return true;
     } else {
       throw new ExceptionsApp("Рецепт не найден");
