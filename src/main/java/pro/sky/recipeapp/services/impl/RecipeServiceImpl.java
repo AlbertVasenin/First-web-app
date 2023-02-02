@@ -107,7 +107,6 @@ public class RecipeServiceImpl implements RecipeService {
 
   @Override
   public Path createRecipesInTxt() throws IOException {
-    listRecipes.getOrDefault(id, null);
     Path recipesText = filesService.createTempFile("Recipes_text");
     try (Writer writer = Files.newBufferedWriter(recipesText, StandardCharsets.UTF_8)) {
       for (Recipe recipes : listRecipes.values()) {

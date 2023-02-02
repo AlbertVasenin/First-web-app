@@ -63,6 +63,7 @@ public class IngredientsServiceImpl implements IngredientsService {
   public boolean deleteIngredient(long id) throws ExceptionsApp {
     if (listIngredients.containsKey(id)) {
       listIngredients.remove(id);
+      saveToFile();
       return true;
     } else {
       throw new ExceptionsApp("Ингредиент не найден");
@@ -70,9 +71,6 @@ public class IngredientsServiceImpl implements IngredientsService {
   }
 
   public Map<Long, Ingredients> getAllIngredients() {
-    for (long i = 0; i < listIngredients.size(); ) {
-      listIngredients.get(++i);
-    }
     return listIngredients;
   }
 

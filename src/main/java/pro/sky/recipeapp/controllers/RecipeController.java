@@ -51,11 +51,7 @@ public class RecipeController {
   @GetMapping("/{id}")
   public ResponseEntity<Recipe> getRecipe(@PathVariable long id) throws ExceptionsApp {
     Recipe recipe = recipeService.getRecipe(id);
-    if (recipe != null) {
       return ResponseEntity.ok(recipe);
-    } else {
-      return ResponseEntity.notFound().build();
-    }
   }
 
   @Operation(
@@ -65,11 +61,7 @@ public class RecipeController {
   public ResponseEntity<Recipe> editRecipe(@PathVariable long id,
       @RequestBody Recipe recipe) throws ExceptionsApp {
     Recipe recipes = recipeService.editRecipe(id, recipe);
-    if (recipes != null) {
       return ResponseEntity.ok(recipes);
-    } else {
-      return ResponseEntity.notFound().build();
-    }
   }
 
   @Operation(
@@ -77,11 +69,8 @@ public class RecipeController {
       description = "Удаление по ID(целочисленное число) рецепта")
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteRecipe(@PathVariable long id) throws ExceptionsApp {
-    if (recipeService.deleteRecipe(id)) {
+    recipeService.deleteRecipe(id);
       return ResponseEntity.ok().build();
-    } else {
-      return ResponseEntity.notFound().build();
-    }
   }
 
   @Operation(

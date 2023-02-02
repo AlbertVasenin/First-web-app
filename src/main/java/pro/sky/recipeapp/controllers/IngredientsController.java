@@ -44,11 +44,7 @@ public class IngredientsController {
   @GetMapping("/{id}")
   public ResponseEntity<Ingredients> getIngredients(@PathVariable long id) throws ExceptionsApp {
     Ingredients ingredients = ingredientsService.getIngredients(id);
-    if (ingredients != null) {
       return ResponseEntity.ok(ingredients);
-    } else {
-      return ResponseEntity.notFound().build();
-    }
   }
 
   @Operation(
@@ -58,11 +54,7 @@ public class IngredientsController {
   public ResponseEntity<Ingredients> editIngredients(@Valid @PathVariable long id,
       @RequestBody Ingredients ingredients) throws ExceptionsApp {
     Ingredients ingredient = ingredientsService.editIngredients(id, ingredients);
-    if (ingredient != null) {
       return ResponseEntity.ok(ingredient);
-    } else {
-      return ResponseEntity.notFound().build();
-    }
   }
 
   @Operation(
@@ -70,11 +62,8 @@ public class IngredientsController {
       description = "Удаление по ID(целочисленное число) ингредиента")
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteIngredient(@PathVariable long id) throws ExceptionsApp {
-    if (ingredientsService.deleteIngredient(id)) {
+    ingredientsService.deleteIngredient(id);
       return ResponseEntity.ok().build();
-    } else {
-      return ResponseEntity.notFound().build();
-    }
   }
 
   @Operation(
